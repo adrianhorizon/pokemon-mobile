@@ -6,7 +6,7 @@ import reducer from './reducers/reducer';
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  blacklist: ['selectedHotel'],
+  blacklist: ['selectedPokemon'],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducer);

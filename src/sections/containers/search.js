@@ -6,20 +6,27 @@ import {
     ActivityIndicator,
     TouchableOpacity,
 } from 'react-native';
+import { connect } from 'react-redux';
 import API from '../../utils/api';
-import PokemonList from './pokemon-list';
+import TYPES from '../../utils/types';
 
 class Search extends Component {
     state = {
         text: '',
-        pokemon: [],
         loading: false,
     };
 
     handleSubmit = async () => {
         const pokemon = await API.pokemonId(this.state.text);
 
-        this.setState({ loading: false, pokemon });
+        this.setState({ loading: false });
+
+        this.props.dispatch({
+            type: TYPES.SET_HOTELS_ID,
+            payload: {
+                selectedPokemon: pokemon,
+            },
+        });
     };
 
     handleChangeText = text => {
@@ -46,7 +53,6 @@ class Search extends Component {
                     </View>
                 </TouchableOpacity>
                 {this.props.loading && <ActivityIndicator />}
-                {/* <PokemonList pokemon={this.props.pokemon || this.state.pokemon} /> */}
             </View>
         );
     }
@@ -57,11 +63,12 @@ const styles = StyleSheet.create({
         top: 0,
         left: 0,
         width: '100%',
-        height: 70,
+        height: 80,
+        backgroundColor: '#fff',
     },
     searchContainer: {
         height: 50,
-        marginTop: 10,
+        marginTop: 20,
         marginLeft: 20,
         marginRight: 20,
         borderWidth: 1,
@@ -87,4 +94,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Search;
+export default connect(null)(Search);

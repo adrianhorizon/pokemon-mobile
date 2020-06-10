@@ -1,20 +1,21 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-const PokemonListLayout = ({ title, children }) => {
+const PokemonListLayout = ({ title }) => {
     return (
         <View style={styles.container}>
             <Text style={styles.title}>{title}</Text>
-            {children}
         </View>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
-        paddingTop: 10,
-        paddingLeft: 10,
-        flex: 1,
+        top: 0,
+        left: 0,
+        padding: 10,
+        width: '100%',
+        backgroundColor: '#fff',
     },
     title: {
         color: '#4c4c4c',

@@ -1,28 +1,56 @@
-import React, { Component } from 'react';
-import { View } from 'react-native';
+import React from 'react';
+import { View, ScrollView, StyleSheet } from 'react-native';
 import Layout from '../components/pokemon-list-layout';
 import Empty from '../components/empty';
 import Separator from '../components/vertical-separator';
+import Search from './search';
 import Pokemon from '../components/pokemon';
-import API from '../../utils/api';
+import { connect } from 'react-redux';
+import TYPES from '../../utils/types';
 
-const PokemonList = (props) => {
+const viewPokemonId = async (dispatch, pokemonId, navigation) => {
+    dispatch({
+        type: TYPES.SET_HOTELS_LIST,
+        payload: {
+            selectedPokemon: pokemonId,
+        },
+    });
+    navigation.navigate('Details');
+};
 
-    if (!props.pokemon) {
-      return <Empty text="no hay sugerencias :(" />;
+const PokemonList = ({ dispatch, pokemons, navigation }) => {
+    if (!pokemons) {
+        return <Empty text="no hay sugerencias :(" />;
     }
+
     return (
-      <Layout title="Alojamientos en todo el mundo">
-        {props.pokemon.map(hotel => {
-          return (
-            <View key={hotel._id}>
-              <Pokemon {...hotel} onPress={() => console.log('loco')} />
-              <Separator />
-            </View>
-          );
-        })}
-      </Layout>
+        <View style={styles.container}>
+            <Search />
+            <Layout title="Pokemons" />
+            <ScrollView>
+                {pokemons['results'].map(pokemonId => {
+                    return (
+                        <View key={pokemonId.name}>
+                            <Pokemon {...pokemonId} onPress={() => viewPokemonId(dispatch, pokemonId.name, navigation)} />
+                            <Separator />
+                        </View>
+                    );
+                })}
+            </ScrollView>
+        </View>
     );
 }
 
-export default PokemonList;
+const mapStateToProps = state => {
+    return {
+        pokemons: state.pokemonList,
+    };
+};
+
+const styles = StyleSheet.create({
+    container: {
+        backgroundColor: '#fff',
+    },
+});
+
+export default connect(mapStateToProps)(PokemonList);

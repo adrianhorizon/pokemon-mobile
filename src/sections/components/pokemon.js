@@ -4,7 +4,6 @@ import { View, Image, Text, StyleSheet, TouchableOpacity, Dimensions } from 'rea
 const { width } = Dimensions.get('window');
 
 const Pokemon = ({ name, onPress }) => {
-    const calification = Math.floor(Math.random() * 500) + 1;
     return (
         <TouchableOpacity onPress={onPress}>
             <View style={styles.container}>
@@ -14,7 +13,7 @@ const Pokemon = ({ name, onPress }) => {
 
                 <View style={styles.right}>
                     <Text style={styles.title}>
-                        {name}
+                        {name} loco
                     </Text>
                     {/* <View style={styles.containerRating}>
                         <Text style={styles.starsValue}>({calification})</Text>
