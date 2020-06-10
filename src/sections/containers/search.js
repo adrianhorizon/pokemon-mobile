@@ -27,6 +27,7 @@ class Search extends Component {
                 selectedPokemon: pokemon,
             },
         });
+        this.props.navigate('Details');
     };
 
     handleChangeText = text => {

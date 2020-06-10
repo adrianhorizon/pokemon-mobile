@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import { connect } from 'react-redux';
 import API from './utils/api';
 import TYPES from './utils/types';
 import Navigator from './navigator';
@@ -22,4 +22,4 @@ class AppLayout extends Component {
     }
 }
 
-export default AppLayout;
+export default connect(null)(AppLayout);;

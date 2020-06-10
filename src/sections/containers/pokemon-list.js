@@ -7,12 +7,14 @@ import Search from './search';
 import Pokemon from '../components/pokemon';
 import { connect } from 'react-redux';
 import TYPES from '../../utils/types';
+import API from '../../utils/api';
 
 const viewPokemonId = async (dispatch, pokemonId, navigation) => {
+    const pokemon = await API.pokemonId(pokemonId);
     dispatch({
         type: TYPES.SET_HOTELS_LIST,
         payload: {
-            selectedPokemon: pokemonId,
+            selectedPokemon: pokemon,
         },
     });
     navigation.navigate('Details');
@@ -25,7 +27,7 @@ const PokemonList = ({ dispatch, pokemons, navigation }) => {
 
     return (
         <View style={styles.container}>
-            <Search />
+            <Search {...navigation} />
             <Layout title="Pokemons" />
             <ScrollView>
                 {pokemons['results'].map(pokemonId => {
