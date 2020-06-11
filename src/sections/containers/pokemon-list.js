@@ -30,6 +30,8 @@ const PokemonList = ({ dispatch, pokemons, navigation }) => {
         return <Empty text="no hay sugerencias :(" />;
     }
 
+    console.log(pokemons)
+
     return (
         <View style={styles.container}>
             <Search {...navigation} />
