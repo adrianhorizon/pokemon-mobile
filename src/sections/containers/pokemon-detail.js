@@ -6,7 +6,6 @@ import Details from '../components/detail';
 import TYPES from '../../utils/types';
 
 const PokemonDetail = props => {
-    console.log(props)
     const opacity = new Animated.Value(0);
 
     useEffect(

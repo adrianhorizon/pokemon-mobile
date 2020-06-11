@@ -9,28 +9,30 @@ import { connect } from 'react-redux';
 import TYPES from '../../utils/types';
 import API from '../../utils/api';
 
-const viewPokemonId = async (id, dispatch, navigation) => {
-    console.log(id, navigation)
-    const pokemonId = await API.pokemonId(id.url)
+const detailPokemon = async name => {
+    const pokemonId = await API.pokemonId(name)
         .then(data => data)
         .catch(reason => console.log(reason.message));
 
-    console.log(pokemonId);
-    // dispatch({
-    //     type: TYPES.SET_HOTELS_ID,
-    //     payload: {
-    //         selectedPokemon: pokemonId,
-    //     },
-    // });
-    // navigation.navigate('Details');
+    return pokemonId;
+};
+
+const viewPokemonId = async (id, dispatch, navigation) => {
+    const pokemonId = await detailPokemon(id.name);
+
+    dispatch({
+        type: TYPES.SET_HOTELS_ID,
+        payload: {
+            selectedPokemon: pokemonId,
+        },
+    });
+    navigation.navigate('Details');
 };
 
 const PokemonList = ({ dispatch, pokemons, navigation }) => {
     if (!pokemons) {
         return <Empty text="no hay sugerencias :(" />;
     }
-
-    console.log(pokemons)
 
     return (
         <View style={styles.container}>

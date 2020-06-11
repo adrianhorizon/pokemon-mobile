@@ -1,76 +1,113 @@
-import React from 'react';
-import { View, Image, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Image, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
+import API from '../../utils/api';
 
-const { width } = Dimensions.get('window');
+const detailPokemon = async name => {
+    const pokemonId = await API.pokemonId(name)
+        .then(data => data)
+        .catch(reason => console.log(reason.message));
 
-const Pokemon = (props) => {
+    return pokemonId;
+};
+
+function Item({ name }) {
     return (
-        <TouchableOpacity onPress={props.onPress}>
-            <View style={styles.container}>
-                {/* <View style={styles.left}>
-                    <Image style={styles.cover} source={{ uri: images[0] }} />
-                </View> */}
-
-                <View style={styles.right}>
-                    <Text style={styles.title}>{props.name}</Text>
-                    {/* <View style={styles.containerRating}>
-                        <Text style={styles.starsValue}>({calification})</Text>
-                    </View>
-                    <Text style={styles.price}>Por $ {price} / noche</Text> */}
-                </View>
-            </View>
-        </TouchableOpacity>
+        <View style={styles.item}>
+            <Text style={styles.title}>{name}</Text>
+        </View>
     );
+}
+
+const Pokemon = props => {
+    const [poke, setPoke] = useState();
+
+    useEffect(() => {
+        async function anyNameFunction() {
+            const pokemonId = await detailPokemon(props.name);
+            setPoke(pokemonId);
+        }
+
+        anyNameFunction();
+    }, [props.name]);
+
+    console.log('hey', poke);
+    if (poke) {
+        return (
+            <TouchableOpacity onPress={props.onPress}>
+                {/* <View style={styles.container}>
+                    <View style={styles.left}>
+                        <Image
+                            style={styles.cover}
+                            source={{ uri: poke.sprites.front_default }}
+                        />
+                    </View>
+
+                    <View style={styles.right}>
+                        <Text style={styles.title}>{poke.name}</Text>
+                        <Text style={styles.price}># 00{poke.id}</Text>
+                    </View>
+                </View> */}
+                <FlatList
+                    data={poke}
+                    renderItem={() => <Item title={poke.name} />}
+                    keyExtractor={item => item.id}
+                />
+            </TouchableOpacity>
+        );
+    } else {
+        return <></>;
+    }
 };
 
 const styles = StyleSheet.create({
     container: {
-        paddingTop: 20,
-        flexDirection: 'column',
+        flex: 1,
     },
-    left: {
-        paddingLeft: 10,
-    },
-    cover: {
-        width: width * 0.9,
-        height: 200,
-        resizeMode: 'cover',
-        borderRadius: 15,
-    },
-    right: {
-        paddingLeft: 10,
-        justifyContent: 'space-around',
+    item: {
+        backgroundColor: '#f9c2ff',
+        padding: 20,
+        marginVertical: 8,
+        marginHorizontal: 16,
     },
     title: {
-        paddingVertical: 10,
-        fontSize: 18,
-        fontWeight: 'bold',
-        color: '#44546b',
-    },
-    price: {
-        paddingVertical: 5,
-        color: '#9aa9b9',
-        fontWeight: 'bold',
-        fontSize: 14,
-        borderRadius: 5,
-    },
-    containerRating: {
-        flexDirection: 'row',
-        paddingVertical: 5,
-    },
-    rating: {
-        marginTop: 4,
-        marginRight: 5,
-        width: 12,
-        height: 12,
-        resizeMode: 'contain',
-    },
-    starsValue: {
-        color: '#9F9F9F',
-    },
-    stars: {
-        color: '#1f2532',
+        fontSize: 32,
     },
 });
+
+// const styles = StyleSheet.create({
+//     container: {
+//         paddingTop: 20,
+//         backgroundColor: 'aqua',
+//         flexDirection: 'column',
+//     },
+//     left: {
+//         paddingLeft: 10,
+//         flexDirection: 'row',
+//     },
+//     cover: {
+//         width: 120,
+//         height: 120,
+//         resizeMode: 'cover',
+//     },
+//     right: {
+//         paddingLeft: 10,
+//         flexDirection: 'row',
+//         backgroundColor: 'yellow',
+//         justifyContent: 'space-around',
+//     },
+//     title: {
+//         paddingVertical: 10,
+//         fontSize: 18,
+//         fontWeight: 'bold',
+//         color: '#44546b',
+//     },
+//     price: {
+//         paddingVertical: 5,
+//         color: '#9aa9b9',
+//         fontWeight: 'bold',
+//         fontSize: 14,
+//         borderRadius: 5,
+//     },
+// });
 
 export default Pokemon;

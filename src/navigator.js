@@ -32,7 +32,7 @@ const TabsScreen = () => (
 const HomeScreen = () => (
     <Stack.Navigator>
         <Stack.Screen
-            name="Home"
+            name="HomeScreen"
             options={{
                 headerShown: false,
             }}

@@ -6,7 +6,10 @@ import Navigator from './navigator';
 
 class AppLayout extends Component {
     async componentDidMount() {
-        const pokemonList = await API.allPokemons();
+        const pokemonList = await API.allPokemons()
+            .then(data => data)
+            .catch(reason => console.log(reason.message));
+
         this.props.dispatch({
             type: TYPES.SET_HOTELS_LIST,
             payload: {
