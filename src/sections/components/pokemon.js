@@ -3,18 +3,16 @@ import { View, Image, Text, StyleSheet, TouchableOpacity, Dimensions } from 'rea
 
 const { width } = Dimensions.get('window');
 
-const Pokemon = ({ name, onPress }) => {
+const Pokemon = (props) => {
     return (
-        <TouchableOpacity onPress={onPress}>
+        <TouchableOpacity onPress={props.onPress}>
             <View style={styles.container}>
                 {/* <View style={styles.left}>
                     <Image style={styles.cover} source={{ uri: images[0] }} />
                 </View> */}
 
                 <View style={styles.right}>
-                    <Text style={styles.title}>
-                        {name} loco
-                    </Text>
+                    <Text style={styles.title}>{props.name}</Text>
                     {/* <View style={styles.containerRating}>
                         <Text style={styles.starsValue}>({calification})</Text>
                     </View>

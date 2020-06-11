@@ -1,63 +1,49 @@
-import React, { Component } from 'react';
-import {
-    View,
-    TextInput,
-    StyleSheet,
-    ActivityIndicator,
-    TouchableOpacity,
-} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import API from '../../utils/api';
 import TYPES from '../../utils/types';
 
-class Search extends Component {
-    state = {
-        text: '',
-        loading: false,
-    };
+const handleSubmit = async (text, props) => {
+    const pokemon = await API.pokemonId(text)
+        .then(data => data)
+        .catch(reason => console.log(reason.message));
 
-    handleSubmit = async () => {
-        const pokemon = await API.pokemonId(this.state.text);
+    props.dispatch({
+        type: TYPES.SET_HOTELS_ID,
+        payload: {
+            selectedPokemon: pokemon,
+        },
+    });
+    props.navigate('Details');
+};
 
-        this.setState({ loading: false });
+const Search = props => {
+    const [value, setText] = useState(null);
 
-        this.props.dispatch({
-            type: TYPES.SET_HOTELS_ID,
-            payload: {
-                selectedPokemon: pokemon,
-            },
-        });
-        this.props.navigate('Details');
-    };
+    useEffect(() => {
+        props.addListener('blur', () => setText(null));
+    });
 
-    handleChangeText = text => {
-        this.setState({
-            text,
-            loading: true,
-        });
-    };
-
-    render() {
-        return (
-            <View style={styles.wrapper}>
-                <TouchableOpacity>
-                    <View style={styles.searchContainer}>
-                        <TextInput
-                            style={styles.textInput}
-                            placeholder="Busca tu pokemon favorito"
-                            autoCorrect={false}
-                            autoCapitalize="sentences"
-                            underlineColorAndroid="transparent"
-                            onSubmitEditing={this.handleSubmit}
-                            onChangeText={this.handleChangeText}
-                        />
-                    </View>
-                </TouchableOpacity>
-                {this.props.loading && <ActivityIndicator />}
-            </View>
-        );
-    }
-}
+    return (
+        <View style={styles.wrapper}>
+            <TouchableOpacity>
+                <View style={styles.searchContainer}>
+                    <TextInput
+                        style={styles.textInput}
+                        placeholder="Busca tu pokemon favorito"
+                        autoCorrect={false}
+                        autoCapitalize="sentences"
+                        underlineColorAndroid="transparent"
+                        onSubmitEditing={() => handleSubmit(value, props)}
+                        onChangeText={text => setText(text)}
+                        value={value}
+                    />
+                </View>
+            </TouchableOpacity>
+        </View>
+    );
+};
 
 const styles = StyleSheet.create({
     wrapper: {

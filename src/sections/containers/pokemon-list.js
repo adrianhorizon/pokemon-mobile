@@ -9,15 +9,20 @@ import { connect } from 'react-redux';
 import TYPES from '../../utils/types';
 import API from '../../utils/api';
 
-const viewPokemonId = async (dispatch, pokemonId, navigation) => {
-    const pokemon = await API.pokemonId(pokemonId);
-    dispatch({
-        type: TYPES.SET_HOTELS_LIST,
-        payload: {
-            selectedPokemon: pokemon,
-        },
-    });
-    navigation.navigate('Details');
+const viewPokemonId = async (id, dispatch, navigation) => {
+    console.log(id, navigation)
+    const pokemonId = await API.pokemonId(id.url)
+        .then(data => data)
+        .catch(reason => console.log(reason.message));
+
+    console.log(pokemonId);
+    // dispatch({
+    //     type: TYPES.SET_HOTELS_ID,
+    //     payload: {
+    //         selectedPokemon: pokemonId,
+    //     },
+    // });
+    // navigation.navigate('Details');
 };
 
 const PokemonList = ({ dispatch, pokemons, navigation }) => {
@@ -30,10 +35,19 @@ const PokemonList = ({ dispatch, pokemons, navigation }) => {
             <Search {...navigation} />
             <Layout title="Pokemons" />
             <ScrollView>
-                {pokemons['results'].map(pokemonId => {
+                {pokemons.results.map(pokemonId => {
                     return (
                         <View key={pokemonId.name}>
-                            <Pokemon {...pokemonId} onPress={() => viewPokemonId(dispatch, pokemonId.name, navigation)} />
+                            <Pokemon
+                                {...pokemonId}
+                                onPress={() =>
+                                    viewPokemonId(
+                                        pokemonId,
+                                        dispatch,
+                                        navigation,
+                                    )
+                                }
+                            />
                             <Separator />
                         </View>
                     );
@@ -41,7 +55,7 @@ const PokemonList = ({ dispatch, pokemons, navigation }) => {
             </ScrollView>
         </View>
     );
-}
+};
 
 const mapStateToProps = state => {
     return {

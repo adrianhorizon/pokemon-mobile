@@ -1,7 +1,7 @@
-import React from "react";
-import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
+import React from 'react';
+import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import Home from './screens/containers/home';
 import Moves from './screens/containers/moves';
@@ -30,13 +30,21 @@ const TabsScreen = () => (
 );
 
 const HomeScreen = () => (
-    <Stack.Navigator >
-        <Stack.Screen name="Home" options={{
-            headerShown: false,
-        }} component={Home} />
-        <Stack.Screen name="Pokemons" options={{
-            headerShown: false,
-        }} component={TabsScreen} />
+    <Stack.Navigator>
+        <Stack.Screen
+            name="Home"
+            options={{
+                headerShown: false,
+            }}
+            component={Home}
+        />
+        <Stack.Screen
+            name="Pokemons"
+            options={{
+                headerShown: false,
+            }}
+            component={TabsScreen}
+        />
     </Stack.Navigator>
 );
 
@@ -47,6 +55,6 @@ const ModalScreen = () => (
             <RootStack.Screen name="Details" component={PokemonDetail} />
         </RootStack.Navigator>
     </NavigationContainer>
-)
+);
 
 export default ModalScreen;

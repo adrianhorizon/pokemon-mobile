@@ -16,10 +16,14 @@ class AppLayout extends Component {
     }
 
     render() {
-        return (
-            <Navigator />
-        );
+        return <Navigator />;
     }
 }
 
-export default connect(null)(AppLayout);;
+const mapStateToProps = state => {
+    return {
+        selectedPokemon: state.selectedHotel,
+    };
+};
+
+export default connect(mapStateToProps)(AppLayout);
