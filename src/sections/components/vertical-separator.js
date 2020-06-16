@@ -1,10 +1,13 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 
 const VerticalSeparator = ({ color }) => {
     return (
         <View
-            style={[styles.separator, { borderTopColor: color ? color : '#eaeaea' }]}
+            style={[
+                styles.separator,
+                { borderTopColor: color ? color : '#eaeaea' },
+            ]}
         />
     );
 };

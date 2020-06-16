@@ -1,57 +1,60 @@
 import React, { useEffect, useState } from 'react';
-import { View, Image, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
+import { View, Image, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import API from '../../utils/api';
 
 const detailPokemon = async name => {
-    const pokemonId = await API.pokemonId(name)
-        .then(data => data)
-        .catch(reason => console.log(reason.message));
+    try {
+        const pokemonId = await API.pokemonId(name);
 
-    return pokemonId;
+        return pokemonId;
+    } catch (error) {
+        console.log(error);
+    }
 };
 
-function Item({ name }) {
-    return (
-        <View style={styles.item}>
-            <Text style={styles.title}>{name}</Text>
-        </View>
-    );
-}
+const Item = id => {
+    if (id >= 1 && id <= 9) {
+        return <>00{id}</>;
+    } else if (id >= 10 && id <= 99) {
+        return <>0{id}</>;
+    } else {
+        return <>{id}</>;
+    }
+};
 
 const Pokemon = props => {
     const [poke, setPoke] = useState();
 
     useEffect(() => {
-        async function anyNameFunction() {
+        async function pokemonGetId() {
             const pokemonId = await detailPokemon(props.name);
             setPoke(pokemonId);
         }
 
-        anyNameFunction();
+        pokemonGetId();
     }, [props.name]);
 
     console.log('hey', poke);
     if (poke) {
         return (
             <TouchableOpacity onPress={props.onPress}>
-                {/* <View style={styles.container}>
-                    <View style={styles.left}>
+                <View style={styles.container}>
+                    <View style={{ flex: 0.3, justifyContent: 'center' }} >
                         <Image
-                            style={styles.cover}
+                            style={styles.imagePokemon}
                             source={{ uri: poke.sprites.front_default }}
                         />
                     </View>
-
-                    <View style={styles.right}>
+                    <View style={{ flex: 0.5, justifyContent: 'center' }}>
                         <Text style={styles.title}>{poke.name}</Text>
-                        <Text style={styles.price}># 00{poke.id}</Text>
+                        <Text style={styles.numberPokemon}>
+                            # {Item(poke.id)}
+                        </Text>
                     </View>
-                </View> */}
-                <FlatList
-                    data={poke}
-                    renderItem={() => <Item title={poke.name} />}
-                    keyExtractor={item => item.id}
-                />
+                    {/* <View style={{ flex: 0.4, justifyContent: 'center' }}>
+                        <Text style={styles.title}>{poke.name}</Text>
+                    </View> */}
+                </View>
             </TouchableOpacity>
         );
     } else {
@@ -62,52 +65,27 @@ const Pokemon = props => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
     },
-    item: {
-        backgroundColor: '#f9c2ff',
-        padding: 20,
-        marginVertical: 8,
-        marginHorizontal: 16,
+    imagePokemon: {
+        resizeMode: 'cover',
+        width: 100,
+        height: 100,
     },
     title: {
-        fontSize: 32,
+        paddingHorizontal: 10,
+        textTransform: 'capitalize',
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: '#44546b',
+    },
+    numberPokemon: {
+        paddingHorizontal: 10,
+        color: '#9aa9b9',
+        fontWeight: 'bold',
+        fontSize: 14,
     },
 });
-
-// const styles = StyleSheet.create({
-//     container: {
-//         paddingTop: 20,
-//         backgroundColor: 'aqua',
-//         flexDirection: 'column',
-//     },
-//     left: {
-//         paddingLeft: 10,
-//         flexDirection: 'row',
-//     },
-//     cover: {
-//         width: 120,
-//         height: 120,
-//         resizeMode: 'cover',
-//     },
-//     right: {
-//         paddingLeft: 10,
-//         flexDirection: 'row',
-//         backgroundColor: 'yellow',
-//         justifyContent: 'space-around',
-//     },
-//     title: {
-//         paddingVertical: 10,
-//         fontSize: 18,
-//         fontWeight: 'bold',
-//         color: '#44546b',
-//     },
-//     price: {
-//         paddingVertical: 5,
-//         color: '#9aa9b9',
-//         fontWeight: 'bold',
-//         fontSize: 14,
-//         borderRadius: 5,
-//     },
-// });
 
 export default Pokemon;

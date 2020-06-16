@@ -3,22 +3,38 @@ import { connect } from 'react-redux';
 import API from './utils/api';
 import TYPES from './utils/types';
 import Navigator from './navigator';
+import { Snackbar } from 'react-native-paper';
 
 class AppLayout extends Component {
-    async componentDidMount() {
-        const pokemonList = await API.allPokemons()
-            .then(data => data)
-            .catch(reason => console.log(reason.message));
+    state = {
+        error: false,
+        message: '',
+    };
 
-        this.props.dispatch({
-            type: TYPES.SET_HOTELS_LIST,
-            payload: {
-                pokemonList,
-            },
-        });
+    async componentDidMount() {
+        try {
+            const pokemonList = await API.allPokemons();
+
+            this.props.dispatch({
+                type: TYPES.SET_HOTELS_LIST,
+                payload: {
+                    pokemonList,
+                },
+            });
+        } catch (error) {
+            this.setState({ error: true, message: error });
+        }
     }
 
     render() {
+        if (this.state.error) {
+            return (
+                <Snackbar visible={this.state.error}>
+                    {this.state.message}
+                </Snackbar>
+            );
+        }
+
         return <Navigator />;
     }
 }

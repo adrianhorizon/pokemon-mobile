@@ -2,7 +2,9 @@ const BASE_API = 'https://pokeapi.co/api/v2';
 
 class Api {
     async pokemonId(id) {
-        const response = await fetch(`${BASE_API}/pokemon/${id}`);
+        const response = await fetch(
+            `${BASE_API}/pokemon/${id}/?offset=0&limit=20`,
+        );
         const pokemon = await response.json();
         return pokemon;
     }
