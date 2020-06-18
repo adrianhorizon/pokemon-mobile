@@ -12,7 +12,7 @@ const PokemonDetail = props => {
         () =>
             props.navigation.addListener('blur', () =>
                 props.dispatch({
-                    type: TYPES.SET_HOTELS_ID,
+                    type: TYPES.SET_POKEMONS_ID,
                     payload: {
                         selectedPokemon: null,
                     },

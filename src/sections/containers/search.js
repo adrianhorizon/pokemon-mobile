@@ -1,28 +1,30 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { View, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import API from '../../utils/api';
 import TYPES from '../../utils/types';
 
 const handleSubmit = async (text, props) => {
-    const pokemon = await API.pokemonId(text)
-        .then(data => data)
-        .catch(reason => console.log(reason.message));
+    if (text) {
+        try {
+            const pokemon = await API.pokemonId(text);
 
-    props.dispatch({
-        type: TYPES.SET_HOTELS_ID,
-        payload: {
-            selectedPokemon: pokemon,
-        },
-    });
-    props.navigate('Details');
+            props.dispatch({
+                type: TYPES.SET_POKEMONS_ID,
+                payload: {
+                    selectedPokemon: pokemon,
+                },
+            });
+            props.navigate('Details');
+        } catch (e) {
+            console.log(e);
+        }
+    }
 };
 
 const Search = props => {
-    const [value, setText] = useState(null);
-
     useEffect(() => {
-        props.addListener('blur', () => setText(null));
+        props.addListener('blur', () => props.setQuery(''));
     });
 
     return (
@@ -35,9 +37,11 @@ const Search = props => {
                         autoCorrect={false}
                         autoCapitalize="sentences"
                         underlineColorAndroid="transparent"
-                        onSubmitEditing={() => handleSubmit(value, props)}
-                        onChangeText={text => setText(text)}
-                        value={value}
+                        onSubmitEditing={event =>
+                            handleSubmit(event.nativeEvent.text, props)
+                        }
+                        onChangeText={text => props.setQuery(text)}
+                        value={props.query}
                     />
                 </View>
             </TouchableOpacity>

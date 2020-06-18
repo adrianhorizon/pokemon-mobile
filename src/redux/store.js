@@ -4,9 +4,9 @@ import { persistStore, persistReducer } from 'redux-persist';
 import reducer from './reducers/reducer';
 
 const persistConfig = {
-  key: 'root',
-  storage: AsyncStorage,
-  blacklist: ['selectedPokemon'],
+    key: 'root',
+    storage: AsyncStorage,
+    blacklist: ['selectedPokemon'],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducer);

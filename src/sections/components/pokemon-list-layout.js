@@ -11,10 +11,10 @@ const PokemonListLayout = ({ title }) => {
 
 const styles = StyleSheet.create({
     container: {
-        top: 0,
-        left: 0,
+        alignItems: 'center',
+        justifyContent: 'center',
+        textAlign: 'center',
         padding: 10,
-        width: '100%',
         backgroundColor: '#fff',
     },
     title: {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 
-const VerticalSeparator = ({ color }) => {
+const Separator = ({ color }) => {
     return (
         <View
             style={[
@@ -18,4 +18,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default VerticalSeparator;
+export default Separator;

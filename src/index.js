@@ -16,7 +16,7 @@ class AppLayout extends Component {
             const pokemonList = await API.allPokemons();
 
             this.props.dispatch({
-                type: TYPES.SET_HOTELS_LIST,
+                type: TYPES.SET_POKEMONS_LIST,
                 payload: {
                     pokemonList,
                 },
@@ -41,7 +41,7 @@ class AppLayout extends Component {
 
 const mapStateToProps = state => {
     return {
-        selectedPokemon: state.selectedHotel,
+        selectedPokemon: state.selectedPokemon,
     };
 };
 

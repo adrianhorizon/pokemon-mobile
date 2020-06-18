@@ -22,6 +22,28 @@ const Item = id => {
     }
 };
 
+const pokemonType = value =>
+    ({
+        bug: require('../../assets/img/Tag/Bug.png'),
+        dark: require('../../assets/img/Tag/Dark.png'),
+        dragon: require('../../assets/img/Tag/Dragon.png'),
+        electric: require('../../assets/img/Tag/Electric.png'),
+        fairy: require('../../assets/img/Tag/Fairy.png'),
+        fight: require('../../assets/img/Tag/Fight.png'),
+        fire: require('../../assets/img/Tag/Fire.png'),
+        flying: require('../../assets/img/Tag/Flying.png'),
+        ghost: require('../../assets/img/Tag/Ghost.png'),
+        grass: require('../../assets/img/Tag/Grass.png'),
+        ground: require('../../assets/img/Tag/Ground.png'),
+        ice: require('../../assets/img/Tag/Ice.png'),
+        normal: require('../../assets/img/Tag/Normal.png'),
+        poison: require('../../assets/img/Tag/Poison.png'),
+        psychic: require('../../assets/img/Tag/Psychic.png'),
+        rock: require('../../assets/img/Tag/Rock.png'),
+        steel: require('../../assets/img/Tag/Steel.png'),
+        water: require('../../assets/img/Tag/Water.png'),
+    }[value]);
+
 const Pokemon = props => {
     const [poke, setPoke] = useState();
 
@@ -34,12 +56,13 @@ const Pokemon = props => {
         pokemonGetId();
     }, [props.name]);
 
-    console.log('hey', poke);
     if (poke) {
+        const loco = Object.keys(poke.types).map(key => poke.types[key].type);
+
         return (
             <TouchableOpacity onPress={props.onPress}>
                 <View style={styles.container}>
-                    <View style={{ flex: 0.3, justifyContent: 'center' }} >
+                    <View style={{ flex: 0.3, justifyContent: 'center' }}>
                         <Image
                             style={styles.imagePokemon}
                             source={{ uri: poke.sprites.front_default }}
@@ -51,18 +74,40 @@ const Pokemon = props => {
                             # {Item(poke.id)}
                         </Text>
                     </View>
-                    {/* <View style={{ flex: 0.4, justifyContent: 'center' }}>
-                        <Text style={styles.title}>{poke.name}</Text>
-                    </View> */}
+                    <View style={{ flex: 0.4, justifyContent: 'center' }}>
+                        {Object.keys(loco).map(keys => {
+                            return (
+                                <View key={loco[keys].name}>
+                                    <Image
+                                        source={pokemonType(loco[keys].name)}
+                                    />
+                                    <Text style={styles.buttonText}>
+                                        {loco[keys].name}
+                                    </Text>
+                                </View>
+                            );
+                        })}
+                    </View>
                 </View>
             </TouchableOpacity>
         );
-    } else {
-        return <></>;
     }
+    return <></>;
 };
 
 const styles = StyleSheet.create({
+    buttonText: {
+        position: 'absolute',
+        textAlign: 'center',
+        fontWeight: 'bold',
+        textTransform: 'capitalize',
+        color: '#fff',
+        fontSize: 16,
+        left: 10,
+        right: 0,
+        top: 8,
+        bottom: 0,
+    },
     container: {
         flex: 1,
         flexDirection: 'row',
