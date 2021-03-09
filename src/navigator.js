@@ -27,19 +27,12 @@ const TabsScreen = () => (
         screenOptions={({ route }) => ({
             tabBarIcon: ({ focused, color, size }) => {
                 let iconName;
-
                 if (route.name === 'Pokemon') {
-                    iconName = focused
-                        ? 'ios-add-circle'
-                        : 'ios-add-circle-outline';
+                    iconName = focused ? 'add-outline' : 'add-circle-outline';
                 } else if (route.name === 'Moves') {
-                    iconName = focused
-                        ? 'ios-add-circle'
-                        : 'ios-add-circle-outline';
+                    iconName = focused ? 'add-outline' : 'add-circle-outline';
                 } else if (route.name === 'Items') {
-                    iconName = focused
-                        ? 'ios-add-circle'
-                        : 'ios-add-circle-outline';
+                    iconName = focused ? 'add-outline' : 'add-circle-outline';
                 }
 
                 return <Ionicons name={iconName} size={size} color={color} />;

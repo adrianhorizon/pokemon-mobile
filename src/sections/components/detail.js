@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
 
 const Details = props => {
-    console.log('aaca', props);
+    console.log('aaca', props.sprites.front_default);
     return (
         <View style={styles.container}>
             <Image
