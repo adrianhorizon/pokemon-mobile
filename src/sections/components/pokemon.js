@@ -138,37 +138,11 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: '#44546b',
     },
-<<<<<<< HEAD
     numberPokemon: {
         paddingHorizontal: 10,
         color: '#9aa9b9',
         fontWeight: 'bold',
         fontSize: 14,
-=======
-    price: {
-        paddingVertical: 5,
-        color: '#9aa9b9',
-        fontWeight: 'bold',
-        fontSize: 14,
-        borderRadius: 5,
-    },
-    containerRating: {
-        flexDirection: 'row',
-        paddingVertical: 5,
-    },
-    rating: {
-        marginTop: 4,
-        marginRight: 5,
-        width: 12,
-        height: 12,
-        resizeMode: 'contain',
-    },
-    starsValue: {
-        color: '#9F9F9F',
-    },
-    stars: {
-        color: '#1f2532',
->>>>>>> [CNS-8542]
     },
 });
 
