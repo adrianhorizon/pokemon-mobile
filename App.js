@@ -13,24 +13,13 @@ class App extends Component {
             <StoreProvider store={store}>
                 <PersistGate loading={<Loading />} persistor={persistor}>
                     <StatusBar barStyle="dark-content" />
-                    <SafeAreaView style={styles.container}>
-                        <PaperProvider>
-                            <AppLayout />
-                        </PaperProvider>
-                    </SafeAreaView>
+                    <PaperProvider>
+                        <AppLayout />
+                    </PaperProvider>
                 </PersistGate>
             </StoreProvider>
         );
     }
 }
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
-});
-
 export default App;
-
-
-

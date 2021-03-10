@@ -1,11 +1,12 @@
 import React from 'react';
 import { View, Text } from 'react-native';
+import PokemonHomeLayout from '../../sections/components/pokemon-home-layout';
 
 const Moves = () => {
     return (
-        <View>
+        <PokemonHomeLayout>
             <Text>Moves</Text>
-        </View>
+        </PokemonHomeLayout>
     );
 };
 

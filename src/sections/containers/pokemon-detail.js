@@ -33,7 +33,7 @@ const PokemonDetail = props => {
         return (
             <Animated.View style={{ flex: 1, opacity }}>
                 <PokemonDetailLayout>
-                    <Details {...props.selectedPokemon} />
+                    <Details {...props} />
                 </PokemonDetailLayout>
             </Animated.View>
         );

@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { View, FlatList, StyleSheet } from 'react-native';
-import Layout from '../components/pokemon-list-layout';
+import PokemonHomeLayout from '../components/pokemon-home-layout';
 import Empty from '../components/empty';
 import Separator from '../components/vertical-separator';
 import Search from './search';
@@ -56,23 +56,24 @@ const PokemonList = ({ dispatch, pokemons, navigation }) => {
     }
 
     return (
-        <View style={styles.container}>
-            <Search {...navigation} query={query} setQuery={setQuery} />
-            <Layout title="Pokemon" />
-            <FlatList
-                data={filteredPokemons}
-                renderItem={({ item }) => (
-                    <Pokemon
-                        {...item}
-                        onPress={() =>
-                            viewPokemonId(item, dispatch, navigation)
-                        }
-                    />
-                )}
-                ItemSeparatorComponent={() => <Separator />}
-                keyExtractor={item => item.name}
-            />
-        </View>
+        <PokemonHomeLayout>
+            <View style={styles.container}>
+                <Search {...navigation} query={query} setQuery={setQuery} />
+                <FlatList
+                    data={filteredPokemons}
+                    renderItem={({ item }) => (
+                        <Pokemon
+                            {...item}
+                            onPress={() =>
+                                viewPokemonId(item, dispatch, navigation)
+                            }
+                        />
+                    )}
+                    ItemSeparatorComponent={() => <Separator />}
+                    keyExtractor={item => item.name}
+                />
+            </View>
+        </PokemonHomeLayout>
     );
 };
 

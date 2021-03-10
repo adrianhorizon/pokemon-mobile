@@ -11,18 +11,14 @@ const Home = ({ navigation }) => {
                         screen: 'Pokemon',
                     },
                 });
-            }, 3000);
+            }, 4000);
             return () => clearTimeout(timer);
         });
 
         return unsubscribe;
     }, [navigation]);
 
-    return (
-        <>
-            <Loading />
-        </>
-    );
+    return <Loading />;
 };
 
 export default Home;

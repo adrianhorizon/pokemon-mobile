@@ -57,32 +57,32 @@ const Pokemon = props => {
     }, [props.name]);
 
     if (poke) {
-        const loco = Object.keys(poke.types).map(key => poke.types[key].type);
+        const pokemonTypes = poke.types.map(({ type }) => type.name);
 
         return (
             <TouchableOpacity onPress={props.onPress}>
                 <View style={styles.container}>
-                    <View style={{ flex: 0.3, justifyContent: 'center' }}>
+                    <View style={styles.viewPokemonOne}>
                         <Image
                             style={styles.imagePokemon}
                             source={{ uri: poke.sprites.front_default }}
                         />
                     </View>
-                    <View style={{ flex: 0.5, justifyContent: 'center' }}>
+                    <View style={styles.viewPokemonThree}>
                         <Text style={styles.title}>{poke.name}</Text>
                         <Text style={styles.numberPokemon}>
                             # {Item(poke.id)}
                         </Text>
                     </View>
-                    <View style={{ flex: 0.4, justifyContent: 'center' }}>
-                        {Object.keys(loco).map(keys => {
+                    <View style={styles.viewPokemonTwo}>
+                        {Object.keys(pokemonTypes).map(keys => {
                             return (
-                                <View key={loco[keys].name}>
+                                <View key={pokemonTypes[keys]}>
                                     <Image
-                                        source={pokemonType(loco[keys].name)}
+                                        source={pokemonType(pokemonTypes[keys])}
                                     />
                                     <Text style={styles.buttonText}>
-                                        {loco[keys].name}
+                                        {pokemonTypes[keys]}
                                     </Text>
                                 </View>
                             );
@@ -96,6 +96,18 @@ const Pokemon = props => {
 };
 
 const styles = StyleSheet.create({
+    viewPokemonOne: {
+        flex: 0.3,
+        justifyContent: 'center',
+    },
+    viewPokemonTwo: {
+        flex: 0.4,
+        justifyContent: 'center',
+    },
+    viewPokemonThree: {
+        flex: 0.5,
+        justifyContent: 'center',
+    },
     buttonText: {
         position: 'absolute',
         textAlign: 'center',
@@ -117,6 +129,7 @@ const styles = StyleSheet.create({
         resizeMode: 'cover',
         width: 100,
         height: 100,
+        backgroundColor: 'transparent',
     },
     title: {
         paddingHorizontal: 10,
