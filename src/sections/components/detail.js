@@ -14,24 +14,24 @@ const { width, height } = Dimensions.get('window');
 
 const colorsPokemon = value =>
     ({
-        grass: '#47CFAF',
-        fire: '#FB6D6C',
-        water: '#74BDFD',
-        dragon: '#8774FF',
-        normal: '#BDBDAE',
-        bug: '#C1D11F',
-        poison: '#AA5DA1',
-        electric: '#FEE63C',
-        ground: '#d3b54a',
-        psychic: '#F562B1',
-        fighting: '#B1746D',
-        fairy: '#FAADFF',
-        rock: '#CEBD72',
-        ghost: '#7A76D8',
-        ice: '#96F1FF',
-        steel: '#C4C2DB',
-        flying: '#7AA1FF',
-        dark: '#8A6653',
+        bug: '#92BC2C',
+        dark: '#595761',
+        dragon: '#0C69C8',
+        electric: '#F2D94E',
+        fire: '#FBA54C',
+        fairy: '#EE90E6',
+        fighting: '#D3425F',
+        flying: '#A1BBEC',
+        ghost: '#5F6DBC',
+        grass: '#5FBD58',
+        ground: '#DA7C4D',
+        ice: '#75D0C1',
+        normal: '#A0A29F',
+        poison: '#B763CF',
+        psychic: '#FA8581',
+        rock: '#C9BB8A',
+        steel: '#5695A3',
+        water: '#539DDF',
     }[value]);
 
 const Details = ({ selectedPokemon, navigation }) => {
@@ -41,14 +41,16 @@ const Details = ({ selectedPokemon, navigation }) => {
     const abilitiesData = selectedPokemon.abilities.map(
         ({ ability }) => `${ability.name} `,
     );
-    console.log(selectedPokemon);
 
     return (
         <ScrollView style={styles().containerScroll}>
             <View
                 style={
-                    styles(colorsPokemon(selectedPokemon.types[0].type.name))
-                        .container
+                    styles(
+                        colorsPokemon(
+                            selectedPokemon.types.find(type => type).type.name,
+                        ),
+                    ).container
                 }>
                 <TouchableOpacity
                     style={styles().closeIcon}
@@ -57,8 +59,8 @@ const Details = ({ selectedPokemon, navigation }) => {
                 </TouchableOpacity>
                 <View>
                     <Text style={styles().name}>{selectedPokemon.name}</Text>
-                    <Text style={styles().types}>
-                        <Text>{pokemonTypes}</Text>
+                    <Text style={styles().containerType}>
+                        <Text style={styles().types}>{pokemonTypes}</Text>
                     </Text>
                     <Image
                         style={styles().cover}
@@ -66,15 +68,22 @@ const Details = ({ selectedPokemon, navigation }) => {
                     />
                 </View>
                 <View style={styles().top}>
-                    <Text style={styles().detail}>DETALLES</Text>
+                    <Text style={styles().detail}>DETAIL</Text>
                     <Text style={styles().subDetail}>
-                        Weight: {selectedPokemon.weight}
+                        Height{'           '}
+                        <Text style={styles().abilities}>
+                            {`(${selectedPokemon.height} cm)`}
+                        </Text>
                     </Text>
                     <Text style={styles().subDetail}>
-                        Height: {selectedPokemon.height}
+                        Weight{'          '}
+                        <Text style={styles().abilities}>
+                            {`(${selectedPokemon.weight} kg)`}
+                        </Text>
                     </Text>
                     <Text style={styles().subDetail}>
-                        Abilities: {abilitiesData}
+                        Abilities{'         '}
+                        <Text style={styles().abilities}>{abilitiesData}</Text>
                     </Text>
                 </View>
             </View>
@@ -88,7 +97,6 @@ const styles = props =>
             flex: 1,
         },
         container: {
-            flex: 1,
             backgroundColor: props,
         },
         closeIcon: {
@@ -111,26 +119,36 @@ const styles = props =>
         },
         name: {
             textTransform: 'capitalize',
-            marginTop: 20,
+            marginTop: 25,
             marginLeft: width * 0.06,
-            fontSize: 28,
+            fontSize: 34,
             fontWeight: 'bold',
             color: '#fff',
         },
-        types: {
+        containerType: {
             textTransform: 'capitalize',
             marginTop: 20,
             marginLeft: width * 0.06,
+            fontSize: 16,
+        },
+        types: {
+            color: '#fff',
         },
         detail: {
-            fontSize: 12,
+            fontSize: 18,
             fontWeight: 'bold',
             paddingVertical: 10,
-            color: '#192225',
+            color: '#44546b',
+            marginBottom: 15,
         },
         subDetail: {
             color: '#9F9F9F',
+            fontWeight: '500',
+            fontSize: 16,
             lineHeight: 24,
+        },
+        abilities: {
+            color: '#44546b',
         },
     });
 

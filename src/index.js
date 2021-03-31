@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
+import { Snackbar } from 'react-native-paper';
 import API from './utils/api';
 import TYPES from './utils/types';
 import Navigator from './navigator';
-import { Snackbar } from 'react-native-paper';
 
 const AppLayout = props => {
-    const [error, setError] = useState();
-    const [message, setMessage] = useState();
+    const [message, setMessage] = useState({
+        error: false,
+        message: '',
+    });
 
     useEffect(() => {
         async function fetchMyAPI() {
@@ -21,16 +23,18 @@ const AppLayout = props => {
                     },
                 });
             } catch (error) {
-                setError(true);
-                setMessage(error);
+                setMessage({
+                    error: true,
+                    message: error,
+                });
             }
         }
 
         fetchMyAPI();
     });
 
-    if (error) {
-        return <Snackbar visible={error}>{message}</Snackbar>;
+    if (message.error) {
+        return <Snackbar visible={message.error}>{message.message}</Snackbar>;
     }
 
     return <Navigator />;

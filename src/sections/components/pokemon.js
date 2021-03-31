@@ -24,24 +24,24 @@ const Item = id => {
 
 const pokemonType = value =>
     ({
-        bug: require('../../assets/img/Tag/Bug.png'),
-        dark: require('../../assets/img/Tag/Dark.png'),
-        dragon: require('../../assets/img/Tag/Dragon.png'),
-        electric: require('../../assets/img/Tag/Electric.png'),
-        fairy: require('../../assets/img/Tag/Fairy.png'),
-        fight: require('../../assets/img/Tag/Fight.png'),
-        fire: require('../../assets/img/Tag/Fire.png'),
-        flying: require('../../assets/img/Tag/Flying.png'),
-        ghost: require('../../assets/img/Tag/Ghost.png'),
-        grass: require('../../assets/img/Tag/Grass.png'),
-        ground: require('../../assets/img/Tag/Ground.png'),
-        ice: require('../../assets/img/Tag/Ice.png'),
-        normal: require('../../assets/img/Tag/Normal.png'),
-        poison: require('../../assets/img/Tag/Poison.png'),
-        psychic: require('../../assets/img/Tag/Psychic.png'),
-        rock: require('../../assets/img/Tag/Rock.png'),
-        steel: require('../../assets/img/Tag/Steel.png'),
-        water: require('../../assets/img/Tag/Water.png'),
+        bug: require('../../assets/img/Tag/Tag-Bug.png'),
+        dark: require('../../assets/img/Tag/Tag-Dark.png'),
+        dragon: require('../../assets/img/Tag/Tag-Dragon.png'),
+        electric: require('../../assets/img/Tag/Tag-Electric.png'),
+        fire: require('../../assets/img/Tag/Tag-Fire.png'),
+        fairy: require('../../assets/img/Tag/Tag-Fairy.png'),
+        fighting: require('../../assets/img/Tag/Tag-Fight.png'),
+        flying: require('../../assets/img/Tag/Tag-Flying.png'),
+        ghost: require('../../assets/img/Tag/Tag-Ghost.png'),
+        grass: require('../../assets/img/Tag/Tag-Grass.png'),
+        ground: require('../../assets/img/Tag/Tag-Ground.png'),
+        ice: require('../../assets/img/Tag/Tag-Ice.png'),
+        normal: require('../../assets/img/Tag/Tag-Normal.png'),
+        poison: require('../../assets/img/Tag/Tag-Poison.png'),
+        psychic: require('../../assets/img/Tag/Tag-Psychic.png'),
+        rock: require('../../assets/img/Tag/Tag-Rock.png'),
+        steel: require('../../assets/img/Tag/Tag-Steel.png'),
+        water: require('../../assets/img/Tag/Tag-Water.png'),
     }[value]);
 
 const Pokemon = props => {
@@ -62,26 +62,37 @@ const Pokemon = props => {
         return (
             <TouchableOpacity onPress={props.onPress}>
                 <View style={styles.container}>
-                    <View style={styles.viewPokemonOne}>
+                    <View>
                         <Image
                             style={styles.imagePokemon}
                             source={{ uri: poke.sprites.front_default }}
                         />
                     </View>
-                    <View style={styles.viewPokemonThree}>
-                        <Text style={styles.title}>{poke.name}</Text>
-                        <Text style={styles.numberPokemon}>
+                    <View>
+                        <Text
+                            numberOfLines={1}
+                            adjustsFontSizeToFit
+                            style={styles.title}>
+                            {poke.name}
+                        </Text>
+                        <Text
+                            numberOfLines={1}
+                            adjustsFontSizeToFit
+                            style={styles.numberPokemon}>
                             # {Item(poke.id)}
                         </Text>
                     </View>
-                    <View style={styles.viewPokemonTwo}>
+                    <View>
                         {Object.keys(pokemonTypes).map(keys => {
                             return (
                                 <View key={pokemonTypes[keys]}>
                                     <Image
                                         source={pokemonType(pokemonTypes[keys])}
                                     />
-                                    <Text style={styles.buttonText}>
+                                    <Text
+                                        numberOfLines={1}
+                                        adjustsFontSizeToFit
+                                        style={styles.buttonText}>
                                         {pokemonTypes[keys]}
                                     </Text>
                                 </View>
@@ -96,17 +107,14 @@ const Pokemon = props => {
 };
 
 const styles = StyleSheet.create({
-    viewPokemonOne: {
-        flex: 0.3,
-        justifyContent: 'center',
-    },
-    viewPokemonTwo: {
-        flex: 0.4,
-        justifyContent: 'center',
-    },
-    viewPokemonThree: {
-        flex: 0.5,
-        justifyContent: 'center',
+    container: {
+        flex: 1,
+        display: 'flex',
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        alignContent: 'center',
     },
     buttonText: {
         position: 'absolute',
@@ -115,15 +123,10 @@ const styles = StyleSheet.create({
         textTransform: 'capitalize',
         color: '#fff',
         fontSize: 16,
-        left: 10,
+        left: 15,
         right: 0,
-        top: 8,
+        top: 19,
         bottom: 0,
-    },
-    container: {
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'flex-start',
     },
     imagePokemon: {
         resizeMode: 'cover',
